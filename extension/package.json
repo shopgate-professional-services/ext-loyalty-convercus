@@ -1,0 +1,20 @@
+{
+  "name": "@shopgate-project/loyalty-convercus",
+  "version": "1.0.0",
+  "description": "",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:shopgate-professional-services/ext-loyalty-convercus.git"
+  },
+  "scripts": {
+    "test": "echo TBA",
+    "lint": "standard"
+  },
+  "dependencies": {
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "standard": "^14.3.3"
+  }
+}

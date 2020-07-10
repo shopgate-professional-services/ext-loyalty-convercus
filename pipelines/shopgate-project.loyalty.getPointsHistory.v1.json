@@ -1,0 +1,33 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate-project.loyalty.getPointsHistory.v1",
+    "public": true,
+    "input": [],
+    "output": [
+      {"key":  "history", "id":  "2"}
+    ],
+    "steps": [
+      {
+        "type": "extension",
+        "id": "@shopgate-project/loyalty-convercus",
+        "path": "@shopgate-project/loyalty-convercus/steps/getAccountId.js",
+        "input": [],
+        "output": [
+          {"key": "accountId", "id": "1"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate-project/loyalty-convercus",
+        "path": "@shopgate-project/loyalty-convercus/account/getPointsHistory.js",
+        "input": [
+          {"key": "accountId", "id": "1"}
+        ],
+        "output": [
+          {"key":  "history", "id":  "2"}
+        ]
+      }
+    ]
+  }
+}

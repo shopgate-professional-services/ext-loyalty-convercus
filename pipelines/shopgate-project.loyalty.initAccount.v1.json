@@ -1,0 +1,22 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate-project.loyalty.initAccount.v1",
+    "public": true,
+    "input": [
+      { "key": "cardCode", "id": "1" }
+    ],
+    "output": [ ],
+    "steps": [
+      {
+        "type": "extension",
+        "id": "@shopgate-project/loyalty-convercus",
+        "path": "@shopgate-project/loyalty-convercus/steps/initAccount.js",
+        "input": [
+          { "key": "cardCode", "id": "1" }
+        ],
+        "output": [ ]
+      }
+    ]
+  }
+}

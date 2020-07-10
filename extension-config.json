@@ -1,7 +1,17 @@
 {
   "version": "1.0.0",
   "id": "@shopgate-project/loyalty-convercus",
-  "configuration": {},
+  "configuration": {
+    "apiToken": {
+      "type": "admin",
+      "destination": "backend",
+      "default": null,
+      "params": {
+        "type": "text" ,
+        "label": "JWT Token for convercus API"
+      }
+    }
+  },
   "components": [],
   "steps": []
 }
