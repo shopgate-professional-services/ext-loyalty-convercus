@@ -25,7 +25,7 @@ module.exports = async (context, { accountId }) => {
         label: card.displayCode,
         status: card.status.toLowerCase()
       },
-      level: {
+      level: accountInfo.level && {
         code: accountInfo.level.name,
         // Gold, etc.
         label: accountInfo.level.name

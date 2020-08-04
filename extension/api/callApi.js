@@ -3,6 +3,7 @@ const request = require('request')
 const InternalError = require('../errors/InternalError')
 const NotFoundError = require('../errors/NotFoundError')
 const { mockCallApi } = require('../mocks')
+const getJWT = require('./getJWT')
 
 const requestPromisified = promisify(request)
 const allowedStatusCodes = [200, 201, 204]
@@ -15,21 +16,24 @@ const defRequestOptions = { qs: {}, headers: {} }
  */
 module.exports = async (context, options = defRequestOptions) => {
   // @TODO Remove this mock before merge
-  return mockCallApi(context, options)
+  //return mockCallApi(context, options)
 
-  const { apiToken } = context.config
+  const apiToken = await getJWT(context)
+
+  const { apiUrl, interactionId } = context.config
   if (!apiToken) {
     context.log.warn('API token is not set')
     throw new InternalError('API token is not set')
   }
 
   const requestOptions = {
-    baseUrl: 'https://api.convercus.io/',
+    baseUrl: apiUrl,
     json: true,
     ...options,
     headers: {
       Authorization: apiToken,
       'id-type': 'ID',
+      'interaction-id': interactionId,
       ...options.headers
     }
   }

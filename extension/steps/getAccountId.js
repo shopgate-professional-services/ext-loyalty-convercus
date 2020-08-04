@@ -6,12 +6,16 @@ const NotFoundError = require('../errors/NotFoundError')
  * @returns {Promise<void>}
  */
 module.exports = async (context) => {
+  // TODO
+  return { accountId: 'fe9d8176-142e-4f6c-8744-c983eb555251' }
+
   // User should be authorized into App
   if (!context.meta.userId) {
     throw new UnauthorizedError()
   }
 
   const account = await context.storage.user.get('account')
+
   if (!account) {
     throw new NotFoundError('Account is not yet activated')
   }

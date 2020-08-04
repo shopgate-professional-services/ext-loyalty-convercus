@@ -10,7 +10,39 @@
         "type": "text" ,
         "label": "JWT Token for convercus API"
       }
+    },
+    "apiUrl": {
+      "type": "admin",
+      "destination": "backend",
+      "default": "https://staging.convercus.io/",
+      "params": {
+        "type": "text" ,
+        "label": "API base url (https://api.convercus.io/)"
+      }
+    },
+    "interactionId": {
+      "type": "admin",
+      "destination": "backend",
+      "default": "userapp",
+      "params": {
+        "type": "text" ,
+        "label": "Unique id of an interaction point which can be mapped to one client"
+      }
+    },
+    "credentials": {
+      "type": "admin",
+      "destination": "backend",
+      "default": {
+        "org": "shg",
+        "password": "jsahd765ghjwdr4k",
+        "userName": "api"
+      },
+      "params": {
+        "type": "json" ,
+        "label": "API credentials"
+      }
     }
+
   },
   "components": [],
   "steps": []
