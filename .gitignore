@@ -105,3 +105,5 @@ dist
 
 /extension/config.json
 /frontend/config.json
+.idea/
+extension/package-lock.json
