@@ -1,4 +1,4 @@
-const callApi = require('../api/callApi')
+const callAuthApi = require('../api/callAuthApi')
 
 /**
  * @param {Object} context
@@ -6,7 +6,7 @@ const callApi = require('../api/callApi')
  * @returns {Promise<{coupons}>}
  */
 module.exports = async (context, { accountId }) => {
-  const bookings = await callApi(context, {
+  const bookings = await callAuthApi(context, {
     uri: `accounts/${encodeURIComponent(accountId)}/bookings`
   })
 

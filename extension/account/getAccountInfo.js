@@ -1,4 +1,4 @@
-const callApi = require('../api/callApi')
+const callAuthApi = require('../api/callAuthApi')
 
 /**
  * @param {Object} context
@@ -6,7 +6,7 @@ const callApi = require('../api/callApi')
  * @returns {Promise<{account}>}
  */
 module.exports = async (context, { accountId }) => {
-  const accountInfo = await callApi(context, {
+  const accountInfo = await callAuthApi(context, {
     uri: `accountdetails/${encodeURIComponent(accountId)}`
   })
 
@@ -25,7 +25,7 @@ module.exports = async (context, { accountId }) => {
         label: card.displayCode,
         status: card.status.toLowerCase()
       },
-      level: {
+      level: accountInfo.level && {
         code: accountInfo.level.name,
         // Gold, etc.
         label: accountInfo.level.name
