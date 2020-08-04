@@ -1,4 +1,4 @@
-const callApi = require('../api/callApi')
+const callAuthApi = require('../api/callAuthApi')
 const NotFoundError = require('../errors/NotFoundError')
 const UnauthorizedError = require('../errors/UnauthorizedError')
 
@@ -7,16 +7,16 @@ const UnauthorizedError = require('../errors/UnauthorizedError')
  * @param {Object} input
  * @returns {Promise<{account}>}
  */
-module.exports = async (context, { cardCode }) => {
+module.exports = async (context, { code }) => {
   // User should be authorized to activate a card
   if (!context.meta.userId) {
     throw new UnauthorizedError()
   }
 
-  const { id, status } = await callApi(context, {
-    uri: `accounts/${encodeURIComponent(cardCode)}`,
+  const { id, status } = await callAuthApi(context, {
+    uri: `accounts/${encodeURIComponent(code)}`,
     headers: {
-      'id-type': 'CARDCODE'
+      'id-type': 'APPCODE'
     }
   })
 

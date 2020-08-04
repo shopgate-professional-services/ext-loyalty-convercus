@@ -2,8 +2,7 @@ const { promisify } = require('util')
 const request = require('request')
 const InternalError = require('../errors/InternalError')
 const NotFoundError = require('../errors/NotFoundError')
-const { mockCallApi } = require('../mocks')
-const getJWT = require('./getJWT')
+const UnauthorizedError = require('../errors/UnauthorizedError')
 
 const requestPromisified = promisify(request)
 const allowedStatusCodes = [200, 201, 204]
@@ -15,24 +14,13 @@ const defRequestOptions = { qs: {}, headers: {} }
  * @returns {Promise<{Object}>}
  */
 module.exports = async (context, options = defRequestOptions) => {
-  // @TODO Remove this mock before merge
-  //return mockCallApi(context, options)
-
-  const apiToken = await getJWT(context)
-
   const { apiUrl, interactionId } = context.config
-  if (!apiToken) {
-    context.log.warn('API token is not set')
-    throw new InternalError('API token is not set')
-  }
 
   const requestOptions = {
     baseUrl: apiUrl,
     json: true,
     ...options,
     headers: {
-      Authorization: apiToken,
-      'id-type': 'ID',
       'interaction-id': interactionId,
       ...options.headers
     }
@@ -50,6 +38,10 @@ module.exports = async (context, options = defRequestOptions) => {
   if (!allowedStatusCodes.includes(statusCode)) {
     const { code = statusCode, message } = body
 
+    if (statusCode === 401 || statusCode === 403) {
+      throw new UnauthorizedError()
+    }
+
     if (statusCode === 404) {
       throw new NotFoundError(message || 'Entity not found')
     }
@@ -62,7 +54,7 @@ module.exports = async (context, options = defRequestOptions) => {
     throw new InternalError(`API error: ${code} ${message}`)
   }
 
-  if (typeof body === 'string') {
+  if (requestOptions.json && typeof body === 'string') {
     context.log.warn({ response: body.slice(0, 100) }, 'Response is malformed')
     throw new InternalError('API response is malformed')
   }
